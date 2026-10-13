@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.log
+tug.config.json
+decision*.md
+result*.json

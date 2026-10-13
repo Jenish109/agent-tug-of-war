@@ -1,0 +1,26 @@
+{
+  "name": "agent-tug-of-war",
+  "version": "0.3.0",
+  "description": "Claude vs Codex tug-of-war debates that end in a decision record",
+  "type": "module",
+  "bin": {
+    "tug": "./tug.mjs"
+  },
+  "files": [
+    "tug.mjs",
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.3"
+  },
+  "keywords": ["claude", "codex", "debate", "ai-agents", "cli", "decision-making", "agent-skill"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jenish109/agent-tug-of-war.git"
+  },
+  "bugs": "https://github.com/Jenish109/agent-tug-of-war/issues",
+  "homepage": "https://github.com/Jenish109/agent-tug-of-war#readme",
+  "license": "MIT"
+}
