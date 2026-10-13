@@ -373,7 +373,7 @@ Argument B (${forIsA ? "AGAINST" : "FOR"}): ${B}
 
 Pick the more persuasive argument on logic, evidence${ctx.text ? " (accuracy against the shared context)" : ""} and rebuttal. Ignore which side you personally agree with. No ties. Do not use tools or read files.
 Reply with only one line of JSON, nothing else:
-{"winner":"A" or "B","pull":1,2 or 3,"reason":"at most 15 words"}
+{"winner":"A" or "B","pull":1,2 or 3,"reason":"at most 15 words, calling the arguments FOR and AGAINST, never A and B"}
 pull = 1 narrow win, 2 clear win, 3 knockout.`;
   let v = null;
   try { v = parseVerdict(await P[judgeTeam].ask(prompt)); } catch (e) { return { judge: P[judgeTeam].name, signed: 0, reason: `abstained (${e.message.slice(0, 80)})` }; }

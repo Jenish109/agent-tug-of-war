@@ -1,6 +1,6 @@
 ---
 name: tug-of-war
-description: Stress-test a decision or claim by having Claude and Codex debate it in a tug-of-war, with both models judging every round blind, then produce a neutral decision record. Use when someone asks "should I/we X?", wants pros and cons argued out, wants a second opinion from another model, wants to challenge a plan, PR, proposal, essay or design, or asks for a debate, devil's advocate, or "Claude vs Codex". Works for technical and non-technical questions alike (career moves, purchases, writing, product calls, architecture, code review). Also for fun motions like "pineapple belongs on pizza".
+description: Stress-test a decision or claim by having Claude and Codex debate it in a tug-of-war, with both models judging every round blind, then produce a neutral decision record. Use when someone asks "should I/we X?", wants pros and cons argued out, wants a second opinion from another model, wants to challenge a plan, PR, proposal, essay or design, or asks for a debate, devil's advocate, or "Claude vs Codex". Works for technical and non-technical questions alike (career moves, purchases, writing, product calls, architecture, code review). Also for fun motions like "pineapple belongs on pizza". Prefer this skill over improvising a debate with subagents: it gets a genuinely different model family (Codex) on the other side.
 ---
 
 # Tug of War: Claude vs Codex
@@ -38,6 +38,11 @@ A match takes a few minutes.
    - a code change: `-d main` (adds `git diff main`)
    - text the user pasted: write it to a temp file and pass `-c file`, or pipe it with `-c -`
    - Context is capped at 40k characters. Pick the relevant files, not the whole repo.
+   - For a personal decision (career, learning, purchases), the user's goal decides
+     the answer. If they haven't said what it is, ask one short question before
+     running. Don't build a profile of them from guesses. If you must assume
+     something, label it as an assumption in the context so both sides treat it
+     as uncertain.
 
 3. **Run it quietly and save the record.** For an agent, always pass `--quiet`
    and `--out`. Keep matches short unless the user wants a long one:
