@@ -59,11 +59,38 @@ A match takes a few minutes.
      the two matches, which balances out the advantage of rebutting second.
      Use it when the decision matters.
 
-4. **Read the record, then answer the user.** Open the `--out` file. Lead with the
-   recommendation and who won (and how decisively), then the strongest point on each
-   side and the open risks. Don't paste the whole transcript; offer the file path.
-   Treat the debate result as evidence, not a verdict: if the arguments were weak or
-   the judges split, say so.
+4. **Read the record, then answer the user in this shape.** Open the `--out` file.
+   Its `## Scoreboard` section has a text rope and a per-round table; reuse them
+   so every result looks the same. Fill in the template below from the record.
+   Keep the code block exactly as it appears in the record:
+
+   ````markdown
+   ## ⚖️ <motion>
+
+   **<WINNER MODEL> wins** arguing **<FOR|AGAINST>** · <n> rounds · judges agreed <x>/<n>
+
+   ```text
+   <the three rope lines from the record's Scoreboard, unchanged>
+   ```
+
+   | | FOR · <model> | AGAINST · <model> |
+   | --- | --- | --- |
+   | Rounds won | <n> | <n> |
+   | Best point | <one line> | <one line> |
+
+   **Recommendation:** <1–3 sentences from the record, in your own words>
+
+   **Still open:** <the 1–3 risks or questions that would change the answer>
+
+   <sub>Full record: `<path>` · Claude vs Codex, both judging blind</sub>
+   ````
+
+   - Lead with the recommendation if the user asked a practical question; lead with
+     the winner if it was for fun.
+   - Treat the debate result as evidence, not a verdict. If the arguments were weak,
+     the judges split, or the match ended on the round cap, say so in one line.
+   - Don't paste the whole transcript. Offer the file path instead.
+   - On a draw, replace the headline with **Dead heat** and say what each side got right.
 
 ## Exit codes
 
@@ -75,12 +102,24 @@ A match takes a few minutes.
 | 1 | runtime error (CLI missing, auth, network) |
 | 2 | bad usage (unknown flag, bad number, missing path) |
 
+## Running inside Codex
+
+Codex runs commands in a sandbox by default. Inside it, the nested `claude`
+CLI can't reach its saved login (it reports "Not logged in") and network calls
+may be blocked. A real match needs to run outside the sandbox:
+
+- In interactive Codex, run the `tug` command with escalated permissions
+  (request to run it outside the sandbox) and let the user approve it.
+- In `codex exec`, the user needs `--sandbox danger-full-access` or an
+  equivalent config. If you can't get that, stop and tell the user.
+
+**Never fall back to `--demo` to answer a real question.** Demo mode uses canned
+arguments and coin-flip judges, so its result means nothing. If the real match
+can't run, report the error and how to fix it.
+
 ## Troubleshooting
 
 - `tug doctor` shows which CLIs are missing.
 - If a judge can't be reached, that judge abstains for the round and the match goes on.
-- When this runs inside Codex, its sandbox may block the network calls the
-  `claude` and `codex` CLIs make. Ask to run the command with network access
-  or outside the sandbox.
-- `--demo` plays with canned arguments and coin-flip judges, for trying the
-  interface without any model calls.
+- "Not logged in" from `claude`, or network errors, usually mean a sandbox. See above.
+- `--demo` is only for trying the interface. It makes no model calls.

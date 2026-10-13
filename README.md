@@ -6,10 +6,7 @@ rope. The first side to drag the flag over its line wins. At the end, a
 decision record sums up the strongest case for each side, the open risks, and
 a recommendation.
 
-```
-              CLAUDE wins                         CODEX wins
-  [o_o][o_o][o_o]─━┃━─━━━─━━━─━━━─◆━━┊━━━─━━━─━━━─━━━─━┃━─[o_o][o_o][o_o]
-```
+<p align="center"><img src="docs/demo.svg" alt="A real tug of war match in the terminal: Claude and Codex argue, both judge blind, and the rope moves" width="680"></p>
 
 ## Install
 
@@ -50,6 +47,9 @@ tug "This change is safe to ship" --diff origin/main --quiet --fast --out review
   || echo "Codex argued it down; see review.md"
 ```
 
+Colors follow your terminal (truecolor or 256-color) and respect `NO_COLOR`.
+Force them with `--color` or turn them off with `--no-color`.
+
 ## As an agent skill
 
 `SKILL.md` makes this a skill for both Claude Code and Codex. Link the folder
@@ -62,6 +62,15 @@ ln -s ~/agent-tug-of-war ~/.codex/skills/tug-of-war
 
 Then ask either agent things like "should we switch to pnpm? run a tug of war
 on it" or "get Codex to argue against my plan".
+
+The agent runs a short match and answers in one consistent format: the rope,
+a scoreboard, the best point on each side, a recommendation, and what's still
+open. The full decision record (with a scoreboard table and transcript) is
+saved to a file.
+
+**Codex note:** Codex's default sandbox stops the nested `claude` CLI from
+reaching its login. Approve the command when Codex asks to run it outside the
+sandbox, or use `codex exec --sandbox danger-full-access` for scripted runs.
 
 ## Fairness
 
